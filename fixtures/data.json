@@ -1,0 +1,12 @@
+{
+    "homePage": "https://www.saucedemo.com/",
+    "errorMessages": {
+        "emptyUsernameError": "Epic sadface: Username is required",
+        "invalidCredentialsError": "Epic sadface: Username and password do not match any user in this service",
+        "lockedOutUserError": "Epic sadface: Sorry, this user has been locked out.",
+        "shortPasswordError": "Epic sadface: Username and password do not match any user in this service"
+    },
+
+    "addToCartText": "Add to cart",
+    "productsPage": "https://www.saucedemo.com/inventory.html"
+}
