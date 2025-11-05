@@ -1,14 +1,10 @@
-name: Playwright Tests
+name: Playwright Tests with Allure Report
 
 on:
-  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-permissions:
-  contents: write
 
 jobs:
   test:
@@ -21,27 +17,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install Playwright browsers
+      - name: Install Playwright Browsers
         run: npx playwright install --with-deps || npx playwright install-deps
 
-      - name: Run Playwright tests with Allure
+      - name: Run Playwright Tests
         run: npx playwright test --reporter=line,allure-playwright
 
-      - name: Generate Allure report
-        if: always()
-        run: |
-          npm install -g allure-commandline --no-save
-          allure generate allure-results -o allure-report --clean
+      - name: Generate Allure Report
+        run: npx allure generate allure-results -o allure-report --clean
 
-      - name: Deploy Allure report to GitHub Pages 🚀
-        if: always()
+      - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
           publish_branch: gh-pages
+          publish_dir: allure-report
