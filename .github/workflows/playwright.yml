@@ -26,12 +26,16 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      # 🧩 NEW STEP — Install Allure Commandline
+      - name: Install Allure commandline
+        run: npm install -g allure-commandline --save-dev
+
       - name: Run Playwright tests with Allure
         run: npx playwright test --reporter=line,allure-playwright
 
       - name: Generate Allure report
         if: always()
-        run: npx allure generate allure-results -o allure-report --clean
+        run: allure generate allure-results -o allure-report --clean
 
       - name: Upload Allure report as artifact
         if: always()
