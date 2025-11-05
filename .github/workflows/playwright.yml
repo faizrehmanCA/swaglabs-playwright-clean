@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate Allure report
         if: always()
-        run: npx allure generate my-allure-results -o allure-report --clean
+        run: npx allure generate allure-results -o allure-report --clean
 
       - name: Upload Allure report as artifact
         if: always()
