@@ -1,0 +1,72 @@
+{
+  "example.spec.ts": [
+    {
+      "name": "has title",
+      "status": "passed"
+    },
+    {
+      "name": "get started link",
+      "status": "passed"
+    }
+  ],
+  "Login Page Functional Tests": [
+    {
+      "name": "Login successfully with valid credentials",
+      "status": "passed"
+    },
+    {
+      "name": "Show error for empty username",
+      "status": "passed"
+    },
+    {
+      "name": "Show error for invalid credentials",
+      "status": "passed"
+    },
+    {
+      "name": "Show error for too short password",
+      "status": "passed"
+    },
+    {
+      "name": "Show error for locked out user",
+      "status": "passed"
+    },
+    {
+      "name": "Show error for whitespace-only credentials",
+      "status": "passed"
+    },
+    {
+      "name": "Username is case-sensitive error",
+      "status": "passed"
+    },
+    {
+      "name": "Error message disappears after clicking close icon",
+      "status": "passed"
+    }
+  ],
+  "Products Page Functional Tests": [
+    {
+      "name": "Verify all products have complete data",
+      "status": "passed"
+    },
+    {
+      "name": "Verify Add to Cart updates cart badge",
+      "status": "passed"
+    },
+    {
+      "name": "Verify cart contains the added product",
+      "status": "passed"
+    },
+    {
+      "name": "Verify checkout page opens correctly",
+      "status": "passed"
+    },
+    {
+      "name": "Verify product can be removed from cart",
+      "status": "passed"
+    },
+    {
+      "name": "Clicking product name or image opens correct detail page",
+      "status": "passed"
+    }
+  ]
+}
