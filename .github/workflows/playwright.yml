@@ -1,4 +1,4 @@
-name: Playwright Tests with Allure Report
+name: Playwright Tests with Allure Report (Netlify Deploy)
 
 on:
   workflow_dispatch:
@@ -8,12 +8,14 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # fetch all history so we can push to netlify branch
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,12 +34,11 @@ jobs:
       - name: Generate Allure report
         if: always()
         run: npx allure-commandline generate allure-results -o allure-report --clean
-        # ^ notice: "allure-commandline" instead of "allure"
-        # this avoids the "Unknown Syntax Error" you were seeing
 
-      - name: Deploy Allure report to GitHub Pages
+      # 🚀 Deploy to Netlify
+      - name: Deploy Allure report to Netlify
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npm run test:deploy

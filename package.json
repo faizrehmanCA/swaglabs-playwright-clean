@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "test": "npx playwright test",
+    "posttest": "node deploy-allure.js",
+    "report": "npx allure generate allure-results -o allure-report --clean && npx allure open allure-report",
     "test:deploy": "node deploy-allure.js"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",

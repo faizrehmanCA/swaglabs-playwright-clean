@@ -1,0 +1,9 @@
+
+Total products found: 6
+
+Product 1: OK
+Product 2: OK
+Product 3: OK
+Product 4: OK
+Product 5: OK
+Product 6: OK
