@@ -1,3 +1,0 @@
-Cart badge updated to 1
-Cart contains product
-Checkout page opened successfully

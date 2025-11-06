@@ -10,12 +10,10 @@ on:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
-
+  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # fetch all history so we can push to netlify branch
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,17 +26,21 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps || npx playwright install-deps
 
-      - name: Run Playwright tests with Allure
-        run: npx playwright test --reporter=line,allure-playwright
+      - name: Run Playwright tests
+        run: npm run test
 
-      - name: Generate Allure report
+      - name: Generate & Deploy Allure report
         if: always()
-        run: npx allure-commandline generate allure-results -o allure-report --clean
-
-      # 🚀 Deploy to Netlify
-      - name: Deploy Allure report to Netlify
-        if: always()
+        id: deploy # Give this step an ID to reference its output
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: npm run test:deploy
+        # This now generates allure-report AND creates deploy-output.json
+
+      - name: Send HTML summary email
+        if: always()
+        run: |
+          echo "${{ secrets.GMAIL_CREDENTIALS }}" > credentials.json
+          echo "${{ secrets.GMAIL_TOKEN }}" > token.json
+          npm run test:email

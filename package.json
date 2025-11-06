@@ -4,21 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
-    "posttest": "node deploy-allure.js",
-    "report": "npx allure generate allure-results -o allure-report --clean && npx allure open allure-report",
-    "test:deploy": "node deploy-allure.js"
-  },
+      "test": "playwright test",
+      "test:deploy": "npx allure-commandline generate allure-results -o allure-report --clean && npx netlify-cli deploy --dir=allure-report --prod --json > deploy-output.json",
+      "test:email": "npx ts-node send-report.ts",
+      "test:run-and-report": "npm run test && npm run test:deploy && npm run test:email"
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.56.1",
+    "@types/archiver": "^7.0.0",
     "@types/node": "^24.9.1",
+    "@types/nodemailer": "^7.0.3",
     "allure-commandline": "^2.34.1",
     "allure-playwright": "^3.4.2"
   },
   "dependencies": {
-    "dotenv": "^17.2.3"
+    "archiver": "^7.0.1",
+    "dotenv": "^17.2.3",
+    "googleapis": "^164.1.0",
+    "nodemailer": "^7.0.10"
   }
 }
