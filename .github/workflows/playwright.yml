@@ -1,11 +1,16 @@
 name: Playwright Tests with Allure Report (Netlify Deploy)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+  
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+  schedule:
+    # This runs the workflow at 23:00 UTC every day, which is 4:00 AM in Pakistan Standard Time (PKT).
+    - cron: '0 23 * * *'
 
 jobs:
   test-and-deploy:
