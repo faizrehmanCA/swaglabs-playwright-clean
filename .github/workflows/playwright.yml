@@ -1,16 +1,21 @@
-name: Playwright Tests with Allure Report
+name: Playwright Tests with Allure Report (Netlify Deploy)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+  
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+  schedule:
+    # This runs the workflow at 23:00 UTC every day, which is 4:00 AM in Pakistan Standard Time (PKT).
+    - cron: '0 23 * * *'
 
 jobs:
-  test:
+  test-and-deploy:
     runs-on: ubuntu-latest
-
+  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,18 +31,21 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps || npx playwright install-deps
 
-      - name: Run Playwright tests with Allure
-        run: npx playwright test --reporter=line,allure-playwright
+      - name: Run Playwright tests
+        run: npm run test
 
-      - name: Generate Allure report
+      - name: Generate & Deploy Allure report
         if: always()
-        run: npx allure-commandline generate allure-results -o allure-report --clean
-        # ^ notice: "allure-commandline" instead of "allure"
-        # this avoids the "Unknown Syntax Error" you were seeing
+        id: deploy # Give this step an ID to reference its output
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npm run test:deploy
+        # This now generates allure-report AND creates deploy-output.json
 
-      - name: Deploy Allure report to GitHub Pages
+      - name: Send HTML summary email
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+        run: |
+          echo "${{ secrets.GMAIL_CREDENTIALS }}" > credentials.json
+          echo "${{ secrets.GMAIL_TOKEN }}" > token.json
+          npm run test:email

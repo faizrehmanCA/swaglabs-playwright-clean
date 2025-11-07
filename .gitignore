@@ -1,0 +1,26 @@
+# Local Netlify folder
+.netlify
+
+# Deployment and test output files/folders
+deploy-output.json
+test-summary.json
+allure-report/
+allure-results/
+allure-report.zip
+
+# Environment variables
+.env
+
+# Node.js dependencies
+node_modules
+
+# Secret credential files (VERY IMPORTANT)
+credentials.json
+token.json
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log

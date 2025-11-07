@@ -1,7 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { LoginPageLocators } from '../locators/loginPage';
 
-import data from '../fixtures/data.json'
+import data from '../fixtures/data.json' with { type: 'json' };
 import dotenv from 'dotenv'
 
 

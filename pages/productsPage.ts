@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import { ProductsPageLocators } from '../locators/products-page-locators';
-import data from '../fixtures/data.json'
+import data from '../fixtures/data.json' with { type: 'json' };
 
 export class ProductsPage {
   readonly page: Page;

@@ -1,0 +1,2 @@
+Cart badge updated to 1
+Remove button works correctly

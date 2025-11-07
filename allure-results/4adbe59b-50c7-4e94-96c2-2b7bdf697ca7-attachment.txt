@@ -1,0 +1,2 @@
+Cart badge updated to 1
+Cart contains product

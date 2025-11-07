@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import JsonReporter from './reporters/jsonReporter';
 
 /**
  * Read environment variables from file.
@@ -26,7 +27,8 @@ export default defineConfig({
   reporter: [
     ['list'], // shows console output
     // ['dot'],
-    ['allure-playwright', {outputFolder: 'allure-results'}] // enables Allure reporting
+    ['allure-playwright', {outputFolder: 'allure-results'}], // enables Allure reporting
+    ['./reporters/jsonReporter.ts', { outputFile: 'test-summary.json' }],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
